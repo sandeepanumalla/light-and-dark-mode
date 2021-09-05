@@ -12,6 +12,14 @@ let baseUrl = [
   "img/undraw_feeling_proud",
   "img/undraw_conceptual_idea",
 ];
+if (localStorage && localStorage.getItem("theme") == "dark") {
+  console.log("tell me running");
+  toggleSwitch.checked = true;
+  switchTheme();
+} else {
+  toggleIcon.checked = false;
+  switchTheme();
+}
 
 function darkMode() {
   nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
@@ -32,14 +40,16 @@ function light() {
 }
 
 function switchTheme(e) {
-  if (e.target.checked) {
+  if (toggleSwitch.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "dark");
     darkMode();
   } else {
     light();
     document.documentElement.removeAttribute("data-theme", "dark");
+    localStorage.setItem("theme", "light");
   }
-  console.log(e.target.checked);
+  //console.log(toggleSwitch.checked, localStorage);
 }
 
 toggleSwitch.addEventListener("change", switchTheme);
