@@ -21,31 +21,26 @@ if (localStorage && localStorage.getItem("theme") == "dark") {
   switchTheme();
 }
 
-function darkMode() {
-  nav.style.backgroundColor = "rgb(0 0 0 / 50%)";
-  toggleIconFirstChildren.textContent = "Dark Mode";
-  toggleIconSecondChildren.classList.replace("fa-sun", "fa-moon");
-  image1.src = `${baseUrl[0]}_dark.svg`;
-  image2.src = `${baseUrl[1]}_dark.svg`;
-  image3.src = `${baseUrl[2]}_dark.svg`;
-}
-
-function light() {
-  nav.style.backgroundColor = "rgb(255 255 255 / 50%)";
-  toggleIconFirstChildren.textContent = "Light Mode";
-  toggleIconSecondChildren.classList.replace("fa-moon", "fa-sun");
-  image1.src = `${baseUrl[0]}_light.svg`;
-  image2.src = `${baseUrl[1]}_light.svg`;
-  image3.src = `${baseUrl[2]}_light.svg`;
+function toggle(isLight) {
+  nav.style.backgroundColor = isLight
+    ? "rgb(255 255 255 / 50%)"
+    : "rgb(0 0 0 / 50%)";
+  toggleIconFirstChildren.textContent = isLight ? "Light Mode" : "Dark Mode";
+  isLight
+    ? toggleIconSecondChildren.classList.replace("fa-moon", "fa-sun")
+    : toggleIconSecondChildren.classList.replace("fa-sun", "fa-moon");
+  image1.src = isLight ? `${baseUrl[0]}_light.svg` : `${baseUrl[0]}_dark.svg`;
+  image2.src = isLight ? `${baseUrl[1]}_light.svg` : `${baseUrl[1]}_dark.svg`;
+  image3.src = isLight ? `${baseUrl[2]}_light.svg` : `${baseUrl[2]}_dark.svg`;
 }
 
 function switchTheme(e) {
   if (toggleSwitch.checked) {
     document.documentElement.setAttribute("data-theme", "dark");
     localStorage.setItem("theme", "dark");
-    darkMode();
+    toggle(false);
   } else {
-    light();
+    toggle(true);
     document.documentElement.removeAttribute("data-theme", "dark");
     localStorage.setItem("theme", "light");
   }
